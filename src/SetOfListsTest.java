@@ -30,6 +30,8 @@ public class SetOfListsTest {
     public void addList() {
         List<String> test = new LinkedList<>();
         List<String> test2 = new LinkedList<>();
+        List<String> test3 = new LinkedList<>();
+        List<String> test4 = new LinkedList<>();
         test.add("QRST");
         test.add("UVWX");
         assertTrue(emptySol.addList(test));
@@ -39,6 +41,12 @@ public class SetOfListsTest {
         test2.add("WIKN");
         assertTrue(emptySol.addList(test2));
         assertEquals("[QRST, UVWX]\n[YZNO, WIKN]", emptySol.toString());
+        test3.add("UVWX");
+        test3.add("QRST");
+        assertFalse(emptySol.addList(test3));
+        test4.add("QRST");
+        test4.add("YZNO");
+        assertTrue(emptySol.addList(test4));
     }
 
     @Test

@@ -26,6 +26,18 @@ public class SetOfLists {
      * @return true if add is successful, else false
      */
     public boolean addList(List newList) {
+        Iterator<List> sliter = stringLists.iterator();
+        while (sliter.hasNext()) {
+            boolean unique = true;
+            List<String> currList = sliter.next();
+            Iterator<String> nlIter = newList.iterator();
+            while (nlIter.hasNext()) {
+                if (!(currList.contains(nlIter.next())))
+                    break;
+                else if (!nlIter.hasNext())
+                    return false;
+            }
+        }
         return stringLists.add(newList);
     }
 
