@@ -16,6 +16,7 @@ public class LetterInventory {
      * @param word the word(s) to be input to the inventory
      */
     public LetterInventory(String word) {
+        word = word.toUpperCase();
         char[] chars = word.toCharArray();
         Arrays.sort(chars);
         inventory = "";
@@ -23,7 +24,7 @@ public class LetterInventory {
             if (Character.isLetter(chars[i]))
                 inventory = inventory + chars[i];
         }
-        inventory = inventory.toLowerCase();
+//        inventory = inventory.toUpperCase();
     }
 
     /**

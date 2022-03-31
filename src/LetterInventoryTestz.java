@@ -50,9 +50,20 @@ public class LetterInventoryTestz {
 
     @org.junit.Test
     public void subtract() {
+        assertEquals("ABCDEFGHIJK", li.subtract(new LetterInventory("LMNOPQRSTUVWXYZ")).toString());
+        assertEquals("ABCDEFGHIJK", li2.subtract(new LetterInventory("LMNOPQRSTUVWXYZ")).toString());
+        assertEquals("QRSTUVWXYZ", li.subtract(li2).toString());
+        assertEquals("BDDEILN", li3.subtract(new LetterInventory("Trails")).toString());
+        assertEquals("", emptyLi.subtract(new LetterInventory("LMNOPQRSTUVWXYZ")).toString());
+        assertEquals("", noConstructorLi.subtract(new LetterInventory("LMNOPQRSTUVWXYZ")).toString());
     }
 
     @org.junit.Test
     public void testToString() {
+        assertEquals("ABCDEFGHIJKLMNOPQRSTUVWXYZ", li.toString());
+        assertEquals("ABCDEFGGGHHHIIJKLMNOP", li2.toString());
+        assertEquals("ABDDEIILLNRST", li3.toString());
+        assertEquals("", emptyLi.toString());
+        assertEquals("", noConstructorLi.toString());
     }
 }
