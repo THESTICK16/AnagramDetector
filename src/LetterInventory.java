@@ -40,7 +40,12 @@ public class LetterInventory {
      * @return the number of times the letter appears in the inventory
      */
     public int getLetterCount(char letter) {
-        return -1;
+        int count = 0;
+        for (int i = 0; i < inventory.length(); i++) {
+            if (Character.toUpperCase(letter) == inventory.charAt(i))
+                count++;
+        }
+        return count;
     }
 
     /**
@@ -56,7 +61,19 @@ public class LetterInventory {
      * @return the new inventory without the duplicat letters in both inventories
      */
     public LetterInventory subtract(LetterInventory compareInventory) {
-        return null;
+        StringBuilder newS = new StringBuilder("");
+        for (int i = 0; i < inventory.length(); i++) {
+            char currentChar = inventory.charAt(i);
+            int numLeft = this.getLetterCount(currentChar) -
+                    compareInventory.getLetterCount(currentChar);
+            if (i != 0 && currentChar == inventory.charAt(i - 1))
+                continue;
+            for (int j = 0; j < numLeft; j++) {
+                newS.append(inventory.charAt(i));
+            }
+        }
+
+        return new LetterInventory(newS.toString());
     }
 
     /**
