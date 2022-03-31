@@ -61,6 +61,16 @@ public class LetterInventory {
      * @return the new inventory without the duplicat letters in both inventories
      */
     public LetterInventory subtract(LetterInventory compareInventory) {
+        for (int i = 0; i < compareInventory.getInventorySize(); i++) {
+            char currentChar = compareInventory.toString().charAt(i);
+
+            for (int j = 0; j < inventory.length(); j++) {
+                if (compareInventory.getLetterCount(currentChar) - this.getLetterCount(currentChar) < 0)
+                    throw new IllegalArgumentException("Incompatible Word, Subtraction Failed");
+            }
+
+        }
+
         StringBuilder newS = new StringBuilder("");
         for (int i = 0; i < inventory.length(); i++) {
             char currentChar = inventory.charAt(i);

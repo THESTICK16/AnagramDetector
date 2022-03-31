@@ -48,7 +48,7 @@ public class LetterInventoryTestz {
         assertEquals(0, noConstructorLi.getInventorySize());
     }
 
-    @org.junit.Test
+    @org.junit.Test (expected = IllegalArgumentException.class)
     public void subtract() {
         assertEquals("ABCDEFGHIJK", li.subtract(new LetterInventory("LMNOPQRSTUVWXYZ")).toString());
         assertEquals("ABCDEFGGGHHHIIJK", li2.subtract(new LetterInventory("LMNOPQRSTUVWXYZ")).toString());
@@ -56,6 +56,7 @@ public class LetterInventoryTestz {
         assertEquals("BDDEILN", li3.subtract(new LetterInventory("Trails")).toString());
         assertEquals("", emptyLi.subtract(new LetterInventory("LMNOPQRSTUVWXYZ")).toString());
         assertEquals("", noConstructorLi.subtract(new LetterInventory("LMNOPQRSTUVWXYZ")).toString());
+        li2.subtract(new LetterInventory("Z"));
     }
 
     @org.junit.Test
