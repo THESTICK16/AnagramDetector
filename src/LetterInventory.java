@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * a class containing the letter inventory for a given input
@@ -22,13 +23,14 @@ public class LetterInventory {
             if (Character.isLetter(chars[i]))
                 inventory = inventory + chars[i];
         }
+        inventory = inventory.toLowerCase();
     }
 
     /**
      * Constructs an empty letter inventory
      */
     public LetterInventory() {
-
+    inventory = "";
     }
 
     /**
