@@ -45,12 +45,15 @@ public class main {
 
         for (int i = 0; i < dictionary.size(); i++) {
             LetterInventory currentWordInventory = new LetterInventory(dictionary.get(i));
-            try {
+            if (phraseInventory.isCompatible(currentWordInventory)) {
+                compatibleWords.add(dictionary.get(i));
+            }
+/*            try {
                 phraseInventory.subtract(currentWordInventory);
                 compatibleWords.add(dictionary.get(i));
             } catch (IllegalArgumentException e) {
                // e.printStackTrace();
-            }
+            }*/
 //            if (phraseInventory.subtract(currentWordInventory).getInventorySize() > 0) {
 //                compatibleWords.add(dictionary.get(i));
 //            }
@@ -64,20 +67,31 @@ public class main {
 //        LetterInventory phraseInventory = new LetterInventory(phrase);
         if (/*inventory.getInventorySize() <= 0 ||*/ wordList.size() >= maxWords) {
             allAnagrams.addList(wordList);
-            return;
+            //return;
         }
         else {
             for (int i = 0; i < dictionary.size(); i++) {
                 LetterInventory wordInventory = new LetterInventory(dictionary.get(i));
-                wordList.add(dictionary.get(i));
-                try {
-                    inventory = inventory.subtract(wordInventory);
-                } catch (IllegalArgumentException e) {
-                    allAnagrams.addList(wordList);
-                    return;
-                    //e.printStackTrace();
+//                wordList.add(dictionary.get(i));
+
+                if (inventory.isCompatible(wordInventory)) {
+                    wordList.add(dictionary.get(i));
+                    LetterInventory newInventory = inventory.subtract(wordInventory);
+                    findAnagrams(newInventory, dictionary, wordList, maxWords);
+//                    wordList.remove(dictionary.get(i));
                 }
-                findAnagrams(inventory, dictionary, wordList, maxWords);
+
+//                try {
+//                    inventory = inventory.subtract(wordInventory);
+//                    findAnagrams(inventory, dictionary, /*wordList*/new ArrayList<String>(), maxWords);
+//                } catch (IllegalArgumentException e) {
+//                    allAnagrams.addList(wordList);
+//                    return;
+//                    //e.printStackTrace();
+//                }
+
+//                findAnagrams(inventory, dictionary, /*wordList*/new ArrayList<String>(), maxWords);
+                //wordList.remove(dictionary.get(i));
             }
         }
     }

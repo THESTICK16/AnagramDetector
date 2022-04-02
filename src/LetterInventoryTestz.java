@@ -1,3 +1,5 @@
+import org.junit.Test;
+
 import static org.junit.Assert.*;
 //import org.junit.Test;
 
@@ -6,6 +8,7 @@ public class LetterInventoryTestz {
     private LetterInventory li;
     private LetterInventory li2;
     private LetterInventory li3;
+    private LetterInventory li4;
     private LetterInventory emptyLi;
     private LetterInventory noConstructorLi;
 
@@ -14,12 +17,13 @@ public class LetterInventoryTestz {
         li = new LetterInventory("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         li2 = new LetterInventory("ABCdefgggHhHijKi1l,m.N]o p");
         li3 = new LetterInventory("Blinded Trails");
+        li4 = new LetterInventory("break point");
         emptyLi = new LetterInventory("");
         noConstructorLi = new LetterInventory();
 
     }
 
-    @org.junit.Test
+    @org.junit.Test //(expected = IllegalArgumentException.class)
     public void getLetterCount() {
         assertEquals(1, li.getLetterCount('a'));
         assertEquals(1, li.getLetterCount('z'));
@@ -57,6 +61,16 @@ public class LetterInventoryTestz {
         assertEquals("", emptyLi.subtract(new LetterInventory("LMNOPQRSTUVWXYZ")).toString());
         assertEquals("", noConstructorLi.subtract(new LetterInventory("LMNOPQRSTUVWXYZ")).toString());
         li2.subtract(new LetterInventory("Z"));
+    }
+
+    @Test
+    public void isCompatible() {
+        assertTrue(li.isCompatible(new LetterInventory("abcdefg")));
+        assertTrue(li.isCompatible(new LetterInventory("     ,,,...;;;;;[]][_=")));
+        assertTrue(li.isCompatible(new LetterInventory("hijkseg")));
+        assertFalse(li.isCompatible(new LetterInventory("aabbcdefg")));
+        assertTrue(li4.isCompatible(new LetterInventory("brat")));
+        assertTrue(li4.isCompatible(new LetterInventory("pain")));
     }
 
     @org.junit.Test

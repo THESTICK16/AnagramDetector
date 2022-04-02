@@ -12,6 +12,12 @@ public class LetterInventory {
     private String inventory;
 
     /**
+     * An array that counts the number of each char that is in the inventory
+     * 'A' = 0, 'Z' = 25
+     */
+    private int[] letterCount = new int[26];
+
+    /**
      * Constructs a letter inventory based on input
      * @param word the word(s) to be input to the inventory
      */
@@ -21,8 +27,10 @@ public class LetterInventory {
         Arrays.sort(chars);
         inventory = "";
         for (int i = 0; i < chars.length; i ++) {
-            if (Character.isLetter(chars[i]))
+            if (Character.isLetter(chars[i])) {
                 inventory = inventory + chars[i];
+                letterCount[chars[i] - 'A']++;
+            }
         }
 //        inventory = inventory.toUpperCase();
     }
@@ -40,12 +48,15 @@ public class LetterInventory {
      * @return the number of times the letter appears in the inventory
      */
     public int getLetterCount(char letter) {
-        int count = 0;
-        for (int i = 0; i < inventory.length(); i++) {
-            if (Character.toUpperCase(letter) == inventory.charAt(i))
-                count++;
-        }
-        return count;
+//        int count = 0;
+//        for (int i = 0; i < inventory.length(); i++) {
+//            if (Character.toUpperCase(letter) == inventory.charAt(i))
+//                count++;
+//        }
+//        return count;
+        if (!Character.isLetter(letter))
+            return 0; //throw new IllegalArgumentException("\'letter\' must contain a letter");
+        return letterCount[Character.toUpperCase(letter) - 'A'];
     }
 
     /**
@@ -64,10 +75,16 @@ public class LetterInventory {
         for (int i = 0; i < compareInventory.getInventorySize(); i++) {
             char currentChar = compareInventory.toString().charAt(i);
 
-            for (int j = 0; j < inventory.length(); j++) {
-                if (compareInventory.getLetterCount(currentChar) - this.getLetterCount(currentChar) < 0)
-                    throw new IllegalArgumentException("Incompatible Word, Subtraction Failed");
-            }
+            if (/*this.getLetterCount(currentChar) <= 0 ||*/ this.getLetterCount(currentChar) - compareInventory.getLetterCount(currentChar) < 0)
+                throw new IllegalArgumentException("Incompatible Word, Subtraction Failed");
+
+//            for (int j = 0; j < inventory.length(); j++) {
+//                if (compareInventory.getLetterCount(currentChar) - this.getLetterCount(currentChar) < 0)
+//                if (inventory.charAt(j) == currentChar)
+//                    break;
+//                else if (j == inventory.length() - 1)
+//                    throw new IllegalArgumentException("Incompatible Word, Subtraction Failed");
+//            }
 
         }
 
@@ -84,6 +101,21 @@ public class LetterInventory {
         }
 
         return new LetterInventory(newS.toString());
+    }
+
+    /**
+     * checks to see if the letters in compareInventory are all contained in this LetterInventory
+     * @param compareInventory the inventory to compare to
+     * @return true if compatible, else false
+     */
+    public boolean isCompatible(LetterInventory compareInventory) {
+        for (int i = 0; i < compareInventory.getInventorySize(); i++) {
+            char currentChar = compareInventory.toString().charAt(i);
+
+            if (/*this.getLetterCount(currentChar) <= 0 ||*/ this.getLetterCount(currentChar) - compareInventory.getLetterCount(currentChar) < 0)
+                return false;
+        }
+        return true;
     }
 
     /**
