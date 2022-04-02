@@ -22,17 +22,16 @@ public class LetterInventory {
      * @param word the word(s) to be input to the inventory
      */
     public LetterInventory(String word) {
-        word = word.toUpperCase();
+        word = word.toUpperCase(); //ensures all inventories rely on capital letters (for ascii values and comparisons
         char[] chars = word.toCharArray();
-        Arrays.sort(chars);
+        Arrays.sort(chars); //ensures the inventory will be in alphabetical order
         inventory = "";
         for (int i = 0; i < chars.length; i ++) {
-            if (Character.isLetter(chars[i])) {
+            if (Character.isLetter(chars[i])) { //ensures no non-letter characters make it into the array (reduces runtime and avoids errors, bugs, and confusion)
                 inventory = inventory + chars[i];
-                letterCount[chars[i] - 'A']++;
+                letterCount[chars[i] - 'A']++; //Subtract the ascii value of A to get the the proper index for the letter (ex. 'A' - 'A' = 0)
             }
         }
-//        inventory = inventory.toUpperCase();
     }
 
     /**
@@ -48,15 +47,9 @@ public class LetterInventory {
      * @return the number of times the letter appears in the inventory
      */
     public int getLetterCount(char letter) {
-//        int count = 0;
-//        for (int i = 0; i < inventory.length(); i++) {
-//            if (Character.toUpperCase(letter) == inventory.charAt(i))
-//                count++;
-//        }
-//        return count;
         if (!Character.isLetter(letter))
-            return 0; //throw new IllegalArgumentException("\'letter\' must contain a letter");
-        return letterCount[Character.toUpperCase(letter) - 'A'];
+            return 0;
+        return letterCount[Character.toUpperCase(letter) - 'A']; //Subtract the ascii value of A to get the the proper index for the letter (ex. 'A' - 'A' = 0)
     }
 
     /**
@@ -75,17 +68,8 @@ public class LetterInventory {
         for (int i = 0; i < compareInventory.getInventorySize(); i++) {
             char currentChar = compareInventory.toString().charAt(i);
 
-            if (/*this.getLetterCount(currentChar) <= 0 ||*/ this.getLetterCount(currentChar) - compareInventory.getLetterCount(currentChar) < 0)
+            if (this.getLetterCount(currentChar) - compareInventory.getLetterCount(currentChar) < 0) //Ensures that no inventories containing letters that 'this' does not have are not attempted to be subtracted
                 throw new IllegalArgumentException("Incompatible Word, Subtraction Failed");
-
-//            for (int j = 0; j < inventory.length(); j++) {
-//                if (compareInventory.getLetterCount(currentChar) - this.getLetterCount(currentChar) < 0)
-//                if (inventory.charAt(j) == currentChar)
-//                    break;
-//                else if (j == inventory.length() - 1)
-//                    throw new IllegalArgumentException("Incompatible Word, Subtraction Failed");
-//            }
-
         }
 
         StringBuilder newS = new StringBuilder("");
@@ -93,7 +77,7 @@ public class LetterInventory {
             char currentChar = inventory.charAt(i);
             int numLeft = this.getLetterCount(currentChar) -
                     compareInventory.getLetterCount(currentChar);
-            if (i != 0 && currentChar == inventory.charAt(i - 1))
+            if (i != 0 && currentChar == inventory.charAt(i - 1)) //ensures that duplicate letters are not added more than they should be. This works properly since the lists are all alphabetical
                 continue;
             for (int j = 0; j < numLeft; j++) {
                 newS.append(inventory.charAt(i));
@@ -112,7 +96,7 @@ public class LetterInventory {
         for (int i = 0; i < compareInventory.getInventorySize(); i++) {
             char currentChar = compareInventory.toString().charAt(i);
 
-            if (/*this.getLetterCount(currentChar) <= 0 ||*/ this.getLetterCount(currentChar) - compareInventory.getLetterCount(currentChar) < 0)
+            if (this.getLetterCount(currentChar) - compareInventory.getLetterCount(currentChar) < 0)
                 return false;
         }
         return true;

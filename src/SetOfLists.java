@@ -26,11 +26,10 @@ public class SetOfLists {
      * @return true if add is successful, else false
      */
     public boolean addList(List newList) {
-        Iterator<List> sliter = stringLists.iterator();
-        while (sliter.hasNext()) {
-            boolean unique = true;
+        Iterator<List> sliter = stringLists.iterator(); //the iterator of the stringLists set
+        while (sliter.hasNext()) { //The contents of this loop ensure that lists with identical values but different orders are not added to the set despite being "unique"
             List<String> currList = sliter.next();
-            Iterator<String> nlIter = newList.iterator();
+            Iterator<String> nlIter = newList.iterator(); //the iterator for the new list to be added to the set
             while (nlIter.hasNext()) {
                 if (!(currList.contains(nlIter.next())))
                     break;
