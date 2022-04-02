@@ -23,6 +23,12 @@ public class LetterInventoryTestz {
 
     }
 
+    /**
+     * Testing Strategy
+     * test that the method returns the proper count for the number of a letter in an inventory
+     * test that empty inventories return 0
+     * test that the method returns zero if the letter is not present or a non-letter is passed
+     */
     @org.junit.Test //(expected = IllegalArgumentException.class)
     public void getLetterCount() {
         assertEquals(1, li.getLetterCount('a'));
@@ -43,6 +49,12 @@ public class LetterInventoryTestz {
         assertEquals(0, noConstructorLi.getLetterCount('g'));
     }
 
+    /**
+     * Testing Strategy
+     *
+     * test that inventories return the proper size
+     * test that empty inventories return 0
+     */
     @org.junit.Test
     public void getInventorySize() {
         assertEquals(26, li.getInventorySize());
@@ -52,6 +64,14 @@ public class LetterInventoryTestz {
         assertEquals(0, noConstructorLi.getInventorySize());
     }
 
+    /**
+     * Testing Strategy
+     *
+     * test that the proper values are returned in the new inventory created by this method
+     * test that an exception is thrown if the inventories are incompatible
+     * test that the returned inventory is identical when an empty inventory is passed
+     * test that an empty inventory is returned if an identical inventory is passed
+     */
     @org.junit.Test (expected = IllegalArgumentException.class)
     public void subtract() {
         assertEquals("ABCDEFGHIJK", li.subtract(new LetterInventory("LMNOPQRSTUVWXYZ")).toString());
@@ -61,8 +81,17 @@ public class LetterInventoryTestz {
         assertEquals("", emptyLi.subtract(new LetterInventory("LMNOPQRSTUVWXYZ")).toString());
         assertEquals("", noConstructorLi.subtract(new LetterInventory("LMNOPQRSTUVWXYZ")).toString());
         li2.subtract(new LetterInventory("Z"));
+        assertEquals("", li.subtract(new LetterInventory("ABCDEFGHIJKLMNOPQRSTUVWXYZ")).toString());
+        assertEquals("ABCDEFGHIJKLMNOPQRSTUVWXYZ", li.subtract(new LetterInventory("")).toString());
     }
 
+    /**
+     * Testing Strategy
+     *
+     * test that LetterInventories with characters that the other one does not have are deemed incompatible
+     * tests that non-letter characters are ommited and do not affect results
+     * test that identical strings and empty strings are deemed compatible
+     */
     @Test
     public void isCompatible() {
         assertTrue(li.isCompatible(new LetterInventory("abcdefg")));
@@ -71,8 +100,16 @@ public class LetterInventoryTestz {
         assertFalse(li.isCompatible(new LetterInventory("aabbcdefg")));
         assertTrue(li4.isCompatible(new LetterInventory("brat")));
         assertTrue(li4.isCompatible(new LetterInventory("pain")));
+        assertTrue(li.isCompatible(new LetterInventory("ABCDEFGHIJKLMNOPQRSTUVWXYZ")));
+        assertTrue(li.isCompatible(new LetterInventory("")));
     }
 
+    /**
+     * Testing Strategy
+     *
+     * covers LetterInventories with values and with no values
+     * ensures the the method returns the proper string with characters in the proper order
+     */
     @org.junit.Test
     public void testToString() {
         assertEquals("ABCDEFGHIJKLMNOPQRSTUVWXYZ", li.toString());

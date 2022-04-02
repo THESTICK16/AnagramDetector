@@ -11,7 +11,7 @@ public class main {
 
     public static void main(String[] args) {
         allAnagrams = new SetOfLists();
-        File dictionaryFile = new File("dict1.txt");
+        File dictionaryFile = new File("dict3.txt");
         List<String> dictionary = new ArrayList<>();
 
         try {
@@ -43,10 +43,10 @@ public class main {
         LetterInventory phraseInventory = new LetterInventory(phrase);
         List<String> compatibleWords = new ArrayList<>();
 
-        for (int i = 0; i < dictionary.size(); i++) {
-            LetterInventory currentWordInventory = new LetterInventory(dictionary.get(i));
+        for (String s : dictionary) {
+            LetterInventory currentWordInventory = new LetterInventory(s);
             if (phraseInventory.isCompatible(currentWordInventory)) {
-                compatibleWords.add(dictionary.get(i));
+                compatibleWords.add(s);
             }
 /*            try {
                 phraseInventory.subtract(currentWordInventory);
@@ -66,20 +66,32 @@ public class main {
     public static void findAnagrams(LetterInventory inventory, List<String> dictionary, List<String> wordList, int maxWords) {
 //        LetterInventory phraseInventory = new LetterInventory(phrase);
         if (/*inventory.getInventorySize() <= 0 ||*/ wordList.size() >= maxWords) {
-            allAnagrams.addList(wordList);
+
+            allAnagrams.addList(new ArrayList(wordList));
+            wordList.clear();
             //return;
         }
         else {
-            for (int i = 0; i < dictionary.size(); i++) {
-                LetterInventory wordInventory = new LetterInventory(dictionary.get(i));
-//                wordList.add(dictionary.get(i));
+            for (String s : dictionary) {
+                LetterInventory wordInventory = new LetterInventory(s);
 
                 if (inventory.isCompatible(wordInventory)) {
-                    wordList.add(dictionary.get(i));
+                    wordList.add(s);
                     LetterInventory newInventory = inventory.subtract(wordInventory);
                     findAnagrams(newInventory, dictionary, wordList, maxWords);
-//                    wordList.remove(dictionary.get(i));
                 }
+            }
+
+//            for (int i = 0; i < dictionary.size(); i++) {
+//                LetterInventory wordInventory = new LetterInventory(dictionary.get(i));
+////                wordList.add(dictionary.get(i));
+//
+//                if (inventory.isCompatible(wordInventory)) {
+//                    wordList.add(dictionary.get(i));
+//                    LetterInventory newInventory = inventory.subtract(wordInventory);
+//                    findAnagrams(newInventory, dictionary, wordList, maxWords);
+////                    wordList.remove(dictionary.get(i));
+//                }
 
 //                try {
 //                    inventory = inventory.subtract(wordInventory);
@@ -92,7 +104,7 @@ public class main {
 
 //                findAnagrams(inventory, dictionary, /*wordList*/new ArrayList<String>(), maxWords);
                 //wordList.remove(dictionary.get(i));
-            }
+            //}
         }
     }
 }

@@ -26,6 +26,14 @@ public class SetOfListsTest {
 
     }
 
+    /**
+     * Testing Strategy
+     *
+     * Test that lists are properly added
+     * test that empty lists are added
+     * test that duplicate/identical lists are not added
+     * test that the lists have been added properly through toString method call
+     */
     @Test
     public void addList() {
         List<String> test = new LinkedList<>();
@@ -47,8 +55,17 @@ public class SetOfListsTest {
         test4.add("QRST");
         test4.add("YZNO");
         assertTrue(emptySol.addList(test4));
+        assertTrue(emptySol.addList(new LinkedList()));
     }
 
+    /**
+     * Testing Strategy
+     *
+     * test that sets return the proper size
+     * test that empty sets return 0
+     * test that returns a different size after adding new lists
+     * test that attempting to add duplicates does not affect size
+     */
     @Test
     public void getSize() {
         assertEquals(2, sol.getSize());
@@ -58,8 +75,19 @@ public class SetOfListsTest {
         sol.addList(new LinkedList());
         sol.addList(new LinkedList());
         assertEquals(3, sol.getSize());
+        List<String> test = new LinkedList<>();
+        test.add("abc d");
+        sol.addList(test);
+        assertEquals(4, sol.getSize());
+
     }
 
+    /**
+     * Testing Strategy
+     *
+     * test that the string values are returned with each list on a separate line
+     * test that empty sets return empty strings
+     */
     @Test
     public void testToString() {
         assertEquals("[ABCD, EFGH]\n[IJKL, MNOP]", sol.toString());
