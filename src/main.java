@@ -57,9 +57,10 @@ public class main {
     }
 
     public static void findAnagrams(LetterInventory inventory, List<String> dictionary, List<String> wordList, int maxWords) {
-        if (wordList.size() >= maxWords) { //the stopping point for the recursive function. stops if the list size is equal to the maximum number of words
+        if (wordList.size() >= maxWords || inventory.getInventorySize() <= 0) { //the stopping point for the recursive function. stops if the list size is equal to the maximum number of words
             allAnagrams.addList(new ArrayList(wordList));
             wordList.clear();
+            return;
         }
 
         else {
@@ -72,6 +73,8 @@ public class main {
                     findAnagrams(newInventory, dictionary, wordList, maxWords); //recursive call to continue searching for anagrams from the current list
                 }
             }
+            allAnagrams.addList(new ArrayList(wordList));
+            wordList.clear();
         }
     }
 }
